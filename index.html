@@ -6,6 +6,8 @@
 <meta name="referrer" content="same-origin">
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
+<meta name="theme-color" content="#07111f">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Games Planet – Arcade Accessories & PS2 USB Game Drives</title>
 
 
@@ -259,9 +261,53 @@ h2{
   line-height:1.55;
 }
 .product-features div+div{margin-top:3px}
+.category-section{
+  margin:14px 0;
+  border:1px solid rgba(34,211,238,.24);
+  border-radius:18px;
+  background:rgba(7,20,37,.68);
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.16);
+}
+.category-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  margin:0;
+  padding:15px 17px;
+  border:0;
+  background:linear-gradient(90deg,rgba(14,116,144,.23),rgba(76,29,149,.18));
+  color:#67e8f9;
+  text-align:left;
+  font:inherit;
+  font-size:clamp(17px,3.8vw,23px);
+  font-weight:900;
+  cursor:pointer;
+}
+.category-toggle:hover{background:linear-gradient(90deg,rgba(14,116,144,.34),rgba(76,29,149,.28))}
+.category-toggle:focus-visible{outline:3px solid #22d3ee;outline-offset:-3px}
+.category-toggle-icon{
+  display:grid;
+  place-items:center;
+  width:32px;
+  height:32px;
+  flex:0 0 32px;
+  border-radius:50%;
+  background:rgba(255,255,255,.10);
+  color:#fff;
+  font-size:24px;
+  line-height:1;
+}
+.category-products{display:none;padding:12px}
+.category-section.open>.category-products{display:block}
+.category-section.open>.category-toggle .category-toggle-icon{transform:rotate(45deg)}
+.category-section[hidden]{display:none!important}
 @media(max-width:520px){
   .image-row img{width:86px;height:86px}
   .image-row.multi-image img{width:62px;height:62px}
+  .category-products{padding:8px}
 }
 .info{
   display:flex;
@@ -874,15 +920,18 @@ img,canvas{
 
 /* Screenshot-matched catalog header */
 .gpz-ticker{
-  position:relative;
-  top:auto;
-  height:52px;
-  background:rgba(5,24,47,.96);
-  border-top:2px solid rgba(234,179,8,.22);
-  border-bottom:2px solid rgba(34,211,238,.38);
+  position:sticky;
+  top:0;
+  z-index:30000;
+  height:34px;
+  background:rgba(2,6,23,.24);
+  border-top:0;
+  border-bottom:1px solid rgba(34,211,238,.22);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .gpz-ticker-track{
-  font-size:clamp(14px,2.4vw,21px);
+  font-size:clamp(10px,1.5vw,13px);
   animation-duration:42s;
 }
 .catalog-top{
@@ -890,34 +939,32 @@ img,canvas{
   margin:18px auto 0;
 }
 .catalog-brand-row{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
+  display:block;
   align-items:center;
-  gap:14px;
 }
 .catalog-brand{
   min-width:0;
   display:flex;
   align-items:center;
-  gap:14px;
-  padding:10px 14px;
+  gap:9px;
+  padding:7px 126px 7px 8px;
 }
 .catalog-logo{
-  width:68px;
-  height:68px;
+  width:48px;
+  height:48px;
   flex:0 0 auto;
   display:grid;
   place-items:center;
   border:2px solid rgba(34,211,238,.22);
-  border-radius:18px;
+  border-radius:13px;
   background:linear-gradient(145deg,#0b2947,#081827);
-  font-size:38px;
+  font-size:27px;
   box-shadow:inset 0 0 22px rgba(34,211,238,.08);
 }
 .catalog-brand-copy{min-width:0}
 .catalog-brand-name{
   margin:0;
-  font-size:clamp(31px,5vw,52px);
+  font-size:clamp(22px,3.5vw,34px);
   line-height:.95;
   letter-spacing:-1.5px;
   font-weight:950;
@@ -927,32 +974,37 @@ img,canvas{
   color:transparent;
 }
 .catalog-brand-tagline{
-  margin-top:7px;
+  margin-top:4px;
   color:#aebed4;
-  font-size:clamp(12px,1.7vw,20px);
+  font-size:clamp(9px,1.2vw,13px);
   line-height:1;
   white-space:nowrap;
 }
 .top-cart-tools{
-  position:static;
-  z-index:auto;
+  position:fixed;
+  top:39px;
+  right:6px;
+  z-index:30001;
   display:flex;
-  gap:10px;
-  padding:7px;
-  border:2px solid rgba(255,255,255,.10);
-  border-radius:32px;
-  background:rgba(3,17,32,.96);
-  box-shadow:0 12px 28px rgba(0,0,0,.34);
+  gap:3px;
+  padding:2px;
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:10px;
+  background:rgba(2,6,23,.16);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+  box-shadow:none;
 }
 .top-cart-count,.top-reset{
-  min-height:58px;
-  padding:12px 24px;
-  border-radius:24px;
-  font-size:clamp(14px,2vw,23px);
+  min-height:24px;
+  padding:3px 6px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:7px;
+  font-size:8px;
   white-space:nowrap;
 }
-.top-cart-count{background:linear-gradient(110deg,#0582c3,#0bb8d1)}
-.top-reset{background:linear-gradient(110deg,#e31e24,#ff3b3b)}
+.top-cart-count{background:rgba(3,105,161,.32)}
+.top-reset{background:rgba(185,28,28,.34)}
 .header{display:none}
 .notice{
   max-width:1420px;
@@ -963,94 +1015,193 @@ img,canvas{
   display:block;
   border:2px solid rgba(255,255,255,.08);
   background:linear-gradient(135deg,rgba(5,21,38,.98),rgba(3,14,27,.98));
-  border-radius:34px;
-  padding:0 28px 10px;
+  border-radius:20px;
+  padding:7px 12px 9px;
 }
 .notice-icon,.notice-text{display:none}
 .notice-title{
-  display:inline-block;
-  transform:translateY(-1px);
-  margin:0 0 42px -10px;
-  padding:11px 15px;
-  background:linear-gradient(90deg,#5e1318,#2b1119);
+  display:block;
+  transform:none;
+  width:100%;
+  margin:0 0 9px;
+  padding:2px 4px;
+  background:transparent;
   color:#fff;
-  font-size:clamp(25px,4.5vw,50px);
-  line-height:1;
-  font-weight:950;
+  font-size:clamp(8px,2.35vw,16px);
+  line-height:1.2;
+  font-weight:850;
+  text-align:center;
+  white-space:nowrap;
 }
-.notice-inner>div:last-child{display:contents}
 .trust-row.catalog-trust{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
   gap:8px;
   margin:0;
+  width:100%;
 }
 .catalog-trust .trust-chip{
   display:flex;
+  flex:1 1 25%;
+  min-width:0;
   justify-content:center;
   align-items:center;
-  min-height:64px;
-  padding:10px 12px;
-  border-radius:22px;
-  background:rgba(10,28,49,.92);
+  min-height:38px;
+  padding:6px 8px;
+  border-radius:12px;
+  background:rgba(10,28,49,.52);
   border:1px solid rgba(255,255,255,.10);
-  font-size:clamp(11px,1.6vw,18px);
+  font-size:clamp(8px,1.2vw,12px);
   text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
 }
 .catalog-controls{
   width:min(1420px,calc(100% - 24px));
-  margin:0 auto 24px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:48px;
+  margin:0 auto 12px;
+  display:flex;
+  justify-content:flex-end;
 }
 .catalog-select-wrap{
   position:relative;
+  width:150px;
 }
 .catalog-select{
   width:100%;
-  min-height:86px;
-  padding:14px 64px 14px 34px;
+  min-height:34px;
+  padding:5px 28px 5px 10px;
   appearance:none;
   border:2px solid rgba(255,255,255,.10);
-  border-radius:34px;
+  border-radius:10px;
   outline:none;
   color:#f8fafc;
   background:#061526;
-  font-size:clamp(20px,3vw,35px);
+  font-size:11px;
 }
 .catalog-select-wrap:after{
   content:"⌄";
   position:absolute;
-  right:32px;
+  right:10px;
   top:50%;
   transform:translateY(-58%);
   color:#dff7ff;
-  font-size:36px;
+  font-size:17px;
   pointer-events:none;
 }
 @media(max-width:680px){
-  .gpz-ticker{height:42px}
-  .catalog-top{margin-top:10px;width:calc(100% - 14px)}
-  .catalog-brand-row{gap:6px}
-  .catalog-brand{gap:7px;padding:6px 2px}
-  .catalog-logo{width:42px;height:42px;border-radius:12px;font-size:25px}
-  .catalog-brand-name{font-size:clamp(24px,8vw,36px)}
-  .catalog-brand-tagline{font-size:10px;margin-top:5px}
-  .top-cart-tools{gap:4px;padding:4px;border-radius:18px}
+  .gpz-ticker{height:30px}
+  .catalog-top{margin-top:6px;width:calc(100% - 10px)}
+  .catalog-brand{gap:6px;padding:4px 112px 4px 2px}
+  .catalog-logo{width:36px;height:36px;border-radius:10px;font-size:21px}
+  .catalog-brand-name{font-size:21px;letter-spacing:-.7px}
+  .catalog-brand-tagline{font-size:8px;margin-top:3px}
+  .top-cart-tools{top:34px;right:4px;gap:2px;padding:2px;border-radius:8px}
   .top-cart-count,.top-reset{
-    min-height:38px;
-    padding:7px 9px;
-    border-radius:14px;
-    font-size:11px;
+    min-height:22px;
+    padding:2px 4px;
+    border-radius:6px;
+    font-size:7px;
   }
   .notice{margin-top:7px;padding:0 7px}
-  .notice-inner{padding:0 10px 9px;border-radius:22px}
-  .notice-title{margin:0 0 25px -3px;padding:8px 9px;font-size:28px}
-  .catalog-trust .trust-chip{min-height:47px;padding:6px 3px;border-radius:13px;font-size:9px}
-  .catalog-controls{width:calc(100% - 14px);gap:14px;margin-bottom:18px}
-  .catalog-select{min-height:62px;padding:10px 40px 10px 18px;border-radius:25px;font-size:20px}
-  .catalog-select-wrap:after{right:18px;font-size:27px}
+  .notice-inner{padding:6px 7px 7px;border-radius:15px}
+  .notice-title{margin:0 0 6px;padding:1px;font-size:clamp(7px,2.55vw,11px)}
+  .catalog-trust .trust-chip{min-height:33px;padding:4px 2px;border-radius:9px;font-size:7px}
+  .catalog-controls{width:calc(100% - 14px);margin-bottom:10px}
+  .catalog-select-wrap{width:126px}
+  .catalog-select{min-height:30px;padding:4px 24px 4px 8px;border-radius:9px;font-size:10px}
+  .catalog-select-wrap:after{right:8px;font-size:15px}
+}
+
+.app-live-panel{
+  width:min(1420px,calc(100% - 14px));
+  margin:0 auto 14px;
+  padding:9px;
+  border:1px solid rgba(34,211,238,.15);
+  border-radius:15px;
+  background:rgba(7,20,36,.58);
+}
+.app-install-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:8px;
+}
+.app-live-title{font-size:12px;font-weight:900;color:#dff7ff}
+.app-install-btn{
+  flex:0 0 auto;
+  min-height:30px;
+  padding:5px 10px;
+  border:1px solid rgba(74,222,128,.35);
+  border-radius:9px;
+  background:linear-gradient(90deg,#15803d,#22c55e);
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  cursor:pointer;
+}
+.app-live-grid{
+  display:grid;
+  grid-template-columns:minmax(150px,280px) minmax(0,1fr);
+  gap:9px;
+  align-items:stretch;
+}
+.latest-video{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  border-radius:10px;
+  background:#000;
+}
+.latest-products-window{
+  min-width:0;
+  overflow:hidden;
+  border-radius:10px;
+  background:rgba(255,255,255,.035);
+}
+.latest-products-track{
+  display:flex;
+  width:max-content;
+  gap:7px;
+  padding:7px;
+  animation:latestProductsMove 28s linear infinite;
+}
+.latest-mini-card{
+  width:90px;
+  flex:0 0 90px;
+  padding:5px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:9px;
+  background:rgba(7,17,31,.92);
+}
+.latest-mini-card img{
+  width:100%;
+  height:48px;
+  display:block;
+  object-fit:contain;
+  border-radius:6px;
+  background:#fff;
+}
+.latest-mini-name{
+  height:24px;
+  margin-top:4px;
+  overflow:hidden;
+  color:#e2e8f0;
+  font-size:8px;
+  line-height:12px;
+}
+.latest-mini-price{margin-top:2px;color:#67e8f9;font-size:10px;font-weight:900}
+@keyframes latestProductsMove{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+@media(max-width:680px){
+  .app-live-grid{grid-template-columns:112px minmax(0,1fr)}
+  .app-live-title{font-size:9px}
+  .app-install-btn{min-height:26px;padding:4px 7px;font-size:8px}
+  .latest-mini-card{width:72px;flex-basis:72px}
+  .latest-mini-card img{height:38px}
 }
 
 </style>
@@ -1095,9 +1246,9 @@ img,canvas{
     <h1>Games Planet</h1>
     <p class="hero-sub">Arcade parts, console accessories, cables and repair tools — selected for gaming shops, technicians and arcade builders.</p>
     <div class="trust-row">
-      <span class="trust-chip">✅ Checked Products</span>
-      <span class="trust-chip">📦 Secure Packing</span>
-      <span class="trust-chip">💳 Prepaid Orders</span>
+      <span class="trust-chip">✅ Checked Product</span>
+      <span class="trust-chip">📦 Secure Packaging</span>
+      <span class="trust-chip">🏠 Home Delivery</span>
       <span class="trust-chip">💬 WhatsApp Support</span>
     </div>
   </div>
@@ -1107,13 +1258,13 @@ img,canvas{
   <div class="notice-inner">
     <div class="notice-icon">🚫</div>
     <div>
-      <div class="notice-title">No Cash on Delivery</div>
+      <div class="notice-title">Prepaid and Cash on Delivery Both Available</div>
       <div class="notice-text">Full advance payment is accepted. Please select products, choose courier service and continue through WhatsApp or the details form.</div>
     </div>
     <div class="trust-row catalog-trust">
-      <span class="trust-chip">✅ Checked Products</span>
-      <span class="trust-chip">📦 Secure Packing</span>
-      <span class="trust-chip">💳 Prepaid Orders</span>
+      <span class="trust-chip">✅ Checked Product</span>
+      <span class="trust-chip">📦 Secure Packaging</span>
+      <span class="trust-chip">🏠 Home Delivery</span>
       <span class="trust-chip">💬 WhatsApp Support</span>
     </div>
   </div>
@@ -1121,16 +1272,8 @@ img,canvas{
 
 <div class="catalog-controls">
   <div class="catalog-select-wrap">
-    <select class="catalog-select" id="catalogSort" aria-label="Sort products">
-      <option value="default">Sort by: Default</option>
-      <option value="price-low">Price: Low to High</option>
-      <option value="price-high">Price: High to Low</option>
-      <option value="name">Name: A to Z</option>
-    </select>
-  </div>
-  <div class="catalog-select-wrap">
-    <select class="catalog-select" id="catalogFilter" aria-label="Filter products">
-      <option value="all">Filter: All</option>
+    <select class="catalog-select" id="catalogFilter" aria-label="Product category" onchange="filterCatalog(this.value)">
+      <option value="all">Category: All</option>
       <option value="Arcade Box Accessories">Arcade Accessories</option>
       <option value="Gaming Accessories">Gaming Accessories</option>
       <option value="PS2">PS2</option>
@@ -1141,9 +1284,24 @@ img,canvas{
       <option value="Cables">Cables</option>
       <option value="Electrical Items">Electrical Items</option>
       <option value="Batteries and Charger">Batteries &amp; Chargers</option>
+      <option value="Computer & Network Accessories">Computer &amp; Network</option>
+      <option value="Mobile Phone Coolers">Mobile Phone Coolers</option>
     </select>
   </div>
 </div>
+
+<section class="app-live-panel" aria-label="Games Planet Android app and latest updates">
+  <div class="app-install-row">
+    <div class="app-live-title">🎮 Current Video &amp; Latest Products</div>
+    <button type="button" class="app-install-btn" id="installAndroidApp">📲 Install Android App</button>
+  </div>
+  <div class="app-live-grid">
+    <iframe class="latest-video" src="https://www.youtube.com/embed/xGR0vUM1-Jw?autoplay=1&mute=1&controls=1&loop=1&playlist=xGR0vUM1-Jw&playsinline=1" title="Games Planet current video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    <div class="latest-products-window">
+      <div class="latest-products-track" id="latestProductsTrack"></div>
+    </div>
+  </div>
+</section>
 
 
 <div class="desktop-layout">
@@ -1154,36 +1312,6 @@ img,canvas{
  <h3>Order Preview</h3>
  <div id="orderList">No items selected</div>
 
- <div class="courier-box">
-<div class="delivery-speed-title">⚡ Choose Delivery Speed</div>
-<div class="delivery-speed-options" id="deliverySpeedOptions">
-  <label class="speed-option" id="speedSurfaceOption">
-    <input type="radio" name="deliverySpeed" value="surface" checked onchange="onDeliverySpeedChange()">
-    <span>Surface Delivery</span>
-  </label>
-  <label class="speed-option" id="speedAirOption">
-    <input type="radio" name="deliverySpeed" value="air" onchange="onDeliverySpeedChange()">
-    <span>By Air Delivery</span>
-  </label>
-  <label class="speed-option" id="speedPrimeOption">
-    <input type="radio" name="deliverySpeed" value="prime" onchange="onDeliverySpeedChange()">
-    <span>Prime Trackon.in</span>
-  </label>
-</div>
-<div id="batteryAirNotice" class="battery-air-notice">🔋 Due battery Item selected no Air or Prime delivery available.</div>
-<div class="courier-label">
-🚚 Choose Your Preferred Courier Service
-</div>
-<select id="courier" onchange="render()" style="padding:8px;border-radius:8px">
-<option value="Trackon.in" selected>Trackon.in</option>
-<option value="Delhivery.com">Delhivery.com</option>
-<option value="BlueDart">BlueDart</option>
-<option value="Ecom Express">Ecom Express</option>
-<option value="Speed Post">Speed Post</option>
-<option value="Shreemaruti.com">Shreemaruti.com</option>
-<option value="Dtdc.in">Dtdc.in</option>
-</select>
-</div>
 <div class="actions">
   <button class="whatsapp" onclick="orderWhatsApp()">Order on WhatsApp</button>
   <button class="details" onclick="goDetails()">Fill Your Details</button>
@@ -1192,15 +1320,11 @@ img,canvas{
 
  <div class="total-grid">
 <div>
-  <b>Total Amount: ₹<span id="total">0</span></b><br>
-  <b>Total Weight: <span id="totalWeight">0</span> g</b><br>
-  <b>Delivery Speed: <span id="deliverySpeedLabel">Surface Delivery</span></b><br>
+  <b>Products Amount: ₹<span id="total">0</span></b><br>
+  <b>Product Weight: <span id="totalWeight">0</span> g</b><br>
+  <b>Packing Weight: <span id="packingWeight">0</span> g</b><br>
   <b>Chargeable Courier Weight: <span id="courierWeightKg">0</span> kg</b><br>
-  <b>Courier Charges: ₹<span id="courierCharge">0</span></b><br>
-  <b>Total With Courier: ₹<span id="grandTotal">0</span></b>
-</div>
-<div>
-  <img id="upiQr" width="90" height="90" style="border-radius:8px;background:#fff">
+  <span style="color:#a5f3fc">Payment, delivery speed and courier will be selected on the next page.</span>
 </div>
 </div>
 </div></div>
@@ -1635,6 +1759,125 @@ ps2GameDrivePrices.forEach(d=>{
   });
 });
 
+products.push(
+  {
+    name:"Best AV Cable for PS2",
+    category:"PS2",
+    price:179,
+    weight:140,
+    dimensions:[18,8,4],
+    compatibility:"PlayStation 2",
+    features:["High-quality audio and video output","PS2 multi-out to RCA connection"],
+    images:["images/jpeg/Ps2bestavcable.jpg"]
+  },
+  {
+    name:"AV Component Connector",
+    category:"Cables",
+    price:160,
+    weight:60,
+    dimensions:[18,7,3],
+    compatibility:"LCD / LED TV, DVD, STB and Projector",
+    features:["3.5mm TRRS to RCA female connector","Video, left audio and right audio"],
+    images:["images/jpeg/Avcomponenet.jpg"]
+  },
+  {
+    name:"AV Male to Male Cable",
+    category:"Cables",
+    price:120,
+    weight:150,
+    dimensions:[20,12,4],
+    compatibility:"Composite video and stereo audio devices",
+    features:["3 RCA male to 3 RCA male","Yellow video with white/red stereo audio"],
+    images:["images/jpeg/Av-male-to-male.jpg"]
+  }
+);
+
+/* New computer, cable and mobile-cooling products — 01 Aug 2026 */
+products.push(
+  {
+    name:"Honeycom HDMI 2.0 Male to Male Cable — 2.2 Meter",
+    category:"Computer & Network Accessories",price:200,weight:170,dimensions:[15,15,3],
+    compatibility:"TV, monitor, laptop, PC, console and other HDMI devices",
+    features:["2.2 meter HDMI male-to-male cable","HDR 2.0 / high-speed cable","Gold-plated connectors"],
+    images:["images/jpeg/honeycom-hdmi-2.2m.jpg"]
+  },
+  {
+    name:"HDMI 2.0 Male to Female Extension Cable — 1.5 Meter",
+    category:"Computer & Network Accessories",price:150,weight:75,dimensions:[15,15,1],
+    compatibility:"HDMI extension for TV, monitor, console and media devices",
+    features:["1.5 meter extension cable","HDMI male input to HDMI female output"],
+    images:["images/jpeg/hdmi-male-female-1.5m.jpg"]
+  },
+  {
+    name:"SATA Network Adapter / Converter for PlayStation 2 Fat",
+    category:"PS2",price:1299,weight:160,dimensions:[17,10,5],
+    compatibility:"PlayStation 2 Fat models with expansion bay",
+    features:["Supports 2.5-inch and 3.5-inch SATA HDD","Storage support up to 2TB","For internal PS2 Fat game drive setup"],
+    images:["images/jpeg/ps2-sata-network-adapter.jpg"]
+  },
+  {
+    name:"Zebronics ZEB-CSH-01 2.5-inch SATA HDD / SSD Enclosure",
+    category:"Computer & Network Accessories",price:380,weight:120,dimensions:[11,16,5],
+    compatibility:"2.5-inch SATA HDD and SATA SSD",
+    features:["USB Type-C 3.1 Gen 1","Transfer speed up to 5Gbps","Storage support up to 6TB","Type-C to USB-A cable included"],
+    images:["images/jpeg/zebronics-zeb-csh-01.jpg"]
+  },
+  {
+    name:"RANZ CAT-6 LAN Patch Cord — 2 Meter",
+    category:"Computer & Network Accessories",price:49,weight:75,dimensions:[17,23,3],
+    compatibility:"Router, PC, laptop, network switch, Smart TV and console",
+    features:["CAT-6 Ethernet patch cable","2 meter length","Price includes GST"],images:["images/jpeg/ranz-cat6-2m.jpg"]
+  },
+  {
+    name:"RANZ CAT-6 LAN Patch Cord — 5 Meter",
+    category:"Computer & Network Accessories",price:80,weight:130,dimensions:[20,25,4],
+    compatibility:"Router, PC, laptop, network switch, Smart TV and console",
+    features:["CAT-6 Ethernet patch cable","5 meter length","Price includes GST"],images:["images/jpeg/ranz-cat6-5m.jpg"]
+  },
+  {
+    name:"RANZ CAT-6 LAN Patch Cord — 10 Meter",
+    category:"Computer & Network Accessories",price:130,weight:280,dimensions:[20,20,7],
+    compatibility:"Router, PC, laptop, network switch, Smart TV and console",
+    features:["CAT-6 Ethernet patch cable","10 meter length","Price includes GST"],images:["images/jpeg/ranz-cat6-10m.jpg"]
+  },
+  {
+    name:"RANZ CAT-6 LAN Patch Cord — 20 Meter",
+    category:"Computer & Network Accessories",price:261,weight:560,dimensions:[23,27,10],
+    compatibility:"Router, PC, laptop, network switch, Smart TV and console",
+    features:["CAT-6 Ethernet patch cable","20 meter length","Price includes GST"],images:["images/jpeg/ranz-cat6-20m.jpg"]
+  },
+  {
+    name:"Plain Black Shock-Proof HDD Carry Cover",
+    category:"Computer & Network Accessories",price:92,weight:90,dimensions:[16,11,4],
+    compatibility:"Portable 2.5-inch external HDD / SSD",
+    features:["Hard protective shell","Internal mesh pocket","Approximate packed size and weight","Price includes GST"],images:["images/jpeg/hdd-cover-black.jpg"]
+  },
+  {
+    name:"Laptop Sleeve — 15.6 Inch",
+    category:"Computer & Network Accessories",price:120,weight:180,dimensions:[40,30,2],
+    compatibility:"Most laptops up to 15.6 inch",
+    features:["Soft protective sleeve","Approximate packed size and weight","Price includes GST"],images:["images/jpeg/laptop-sleeve-15-6.jpg"]
+  },
+  {
+    name:"Folding Metal Laptop Stand",
+    category:"Computer & Network Accessories",price:215,weight:250,dimensions:[24,5,2],
+    compatibility:"Laptop and tablet",
+    features:["Foldable metal frame","Multi-angle adjustment","Anti-slip pads","Approximate packed size and weight","Price includes GST"],images:["images/jpeg/folding-metal-laptop-stand.jpg"]
+  },
+  {name:"L01 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:666,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","Exact model image pending"],images:["images/jpeg/phone-cooler-image-pending.jpg"]},
+  {name:"SL-16 Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:120,dimensions:[12,9,5],features:["Semiconductor cooling plate","RGB lighting","Adjustable cooling gears"],images:["images/jpeg/phone-cooler-sl16.jpg"]},
+  {name:"SL-25 15W Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:985,weight:130,dimensions:[10,10,5],features:["15W high-power cooling","RGB lighting","Cold-dome semiconductor plate"],images:["images/jpeg/phone-cooler-sl25.jpg"]},
+  {name:"SL01 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:120,dimensions:[12,9,5],features:["Instant phone cooling","RGB fan","Clip-on design"],images:["images/jpeg/phone-cooler-sl01.jpg"]},
+  {name:"SL-21 Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1162,weight:130,dimensions:[12,9,5],features:["Large semiconductor cooling plate","Digital temperature display","Multi-gear adjustment"],images:["images/jpeg/phone-cooler-sl21.jpg"]},
+  {name:"SL-20 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1221,weight:130,dimensions:[12,9,5],features:["Gaming phone cooling fan","Exact model image pending"],images:["images/jpeg/phone-cooler-image-pending.jpg"]},
+  {name:"AL02 RGB Mobile Phone Cooler",category:"Mobile Phone Coolers",price:749,weight:110,dimensions:[9,9,5],features:["Fast semiconductor cooling","RGB lighting","Compact round design"],images:["images/jpeg/phone-cooler-al02.jpg"]},
+  {name:"SL-31 Compact Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:115,dimensions:[11,8,5],features:["Compact portable design","Digital temperature display","RGB lighting"],images:["images/jpeg/phone-cooler-sl31.jpg"]},
+  {name:"DY58 / SL09 Dual Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1020,weight:150,dimensions:[12,9,6],features:["Dual-core semiconductor cooling","RGB lighting","3-level control","5V 3A / 15W input"],images:["images/jpeg/dy58-sl09-dual-phone-cooler.jpg"]},
+  {name:"SL-14 Rechargeable Battery Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1221,weight:180,dimensions:[13,9,5],containsBattery:true,features:["Built-in rechargeable battery / power bank","Portable cable-free cooling","Digital temperature display"],images:["images/jpeg/phone-cooler-sl14.jpg"]},
+  {name:"DY26 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:631,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","Exact model image pending"],images:["images/jpeg/phone-cooler-image-pending.jpg"]},
+  {name:"SL-22 Dual-Fan Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1162,weight:170,dimensions:[14,9,5],features:["Dual cooling fans","Digital temperature display","Adjustable cooling controls","RGB lighting"],images:["images/jpeg/phone-cooler-sl22.jpg"]}
+);
+
 const colorDots={
 "Red":"#FF0000","Yellow":"#FFD700","Ice Blue":"#00CFFF",
 "Pink":"#FF69B4","Green":"#00CC44","Black":"#000000",
@@ -1665,13 +1908,20 @@ const categoryOrder=[
 "Cables",
 "Electrical Items",
 "Batteries and Charger"
+ ,"Computer & Network Accessories"
+ ,"Mobile Phone Coolers"
 ];
 
 categoryOrder.forEach(cat=>{
  const catProducts=products.filter(p=>p.category===cat);
  if(!catProducts.length) return;
 
- container.innerHTML += `<h2 style="color:#00f7ff;margin:15px 5px 10px">${cat}</h2>`;
+ const isDefaultOpen=cat==="Arcade Box Accessories";
+ container.innerHTML += `<section class="category-section${isDefaultOpen?' open':''}" data-category="${cat}">
+ <button type="button" class="category-toggle" aria-expanded="${isDefaultOpen}" onclick="toggleCategory(this)">
+  <span>${cat}</span><span class="category-toggle-icon" aria-hidden="true">+</span>
+ </button>
+ <div class="category-products">`;
 
  catProducts.forEach((p)=>{
  const i=products.indexOf(p);
@@ -1679,7 +1929,7 @@ categoryOrder.forEach(cat=>{
 
  const imgs=p.images.map(img=>`<img src="${img}" loading="lazy" decoding="async" alt="${p.name}" onclick="openImg('${img}')">`).join("");
  container.innerHTML+=`
- <div class="product">
+ <div class="product" data-category="${cat}">
   <b class="product-title">${p.name}</b>
   <div class="product-specs">
     <span>📏 Size: <b>${p.dimensions ? p.dimensions.join(" × ")+" cm" : "Not set"}</b></span>
@@ -1702,7 +1952,59 @@ categoryOrder.forEach(cat=>{
   </div>
  </div>`;
 });
+ container.innerHTML += `</div></section>`;
 });
+
+function toggleCategory(button,forceOpen){
+ const section=button.closest('.category-section');
+ if(!section) return;
+ const shouldOpen=typeof forceOpen==='boolean' ? forceOpen : !section.classList.contains('open');
+ section.classList.toggle('open',shouldOpen);
+ button.setAttribute('aria-expanded',String(shouldOpen));
+}
+
+function filterCatalog(category){
+ document.querySelectorAll("#products > .category-section").forEach(section=>{
+   const matches=category==="all" || section.dataset.category===category;
+   section.hidden=!matches;
+   if(category!=="all" && matches){
+     const button=section.querySelector('.category-toggle');
+     if(button) toggleCategory(button,true);
+   }
+ });
+}
+
+function renderLatestProducts(){
+ const track=document.getElementById("latestProductsTrack");
+ if(!track) return;
+ const latest=products.slice(-12).reverse();
+ const cards=latest.map(p=>`
+   <div class="latest-mini-card">
+     <img src="${p.images?.[0]||""}" alt="${p.name}" loading="lazy">
+     <div class="latest-mini-name">${p.name}</div>
+     <div class="latest-mini-price">${p.priceLabel||("₹"+p.price)}</div>
+   </div>`).join("");
+ track.innerHTML=cards+cards;
+}
+
+let deferredAppInstall=null;
+window.addEventListener("beforeinstallprompt",event=>{
+ event.preventDefault();
+ deferredAppInstall=event;
+});
+document.getElementById("installAndroidApp")?.addEventListener("click",async()=>{
+ if(deferredAppInstall){
+   deferredAppInstall.prompt();
+   await deferredAppInstall.userChoice;
+   deferredAppInstall=null;
+ }else{
+   alert("Android Chrome menu खोलें और ‘Install app’ या ‘Add to Home screen’ चुनें.");
+ }
+});
+if("serviceWorker" in navigator && location.protocol.startsWith("http")){
+ window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js?v=3",{updateViaCache:"none"}).catch(()=>{}));
+}
+renderLatestProducts();
 
 
 function clearCart(){
@@ -1772,7 +2074,7 @@ function updateVariantQty(i,v,val){
 }
 
 const DELIVERY_SPEEDS={
- surface:{label:"Surface Delivery",multiplier:1,couriers:["Trackon.in","Delhivery.com","BlueDart","Ecom Express","Speed Post","Shreemaruti.com","Dtdc.in"]},
+ surface:{label:"Surface Delivery",multiplier:1,couriers:["Trackon.in","Delhivery.com","BlueDart","Ecom Express","XpressBees","Speed Post","Shreemaruti.com","Dtdc.in"]},
  air:{label:"By Air Delivery",multiplier:1.5,couriers:["Trackon.in","Shreemaruti.com"]},
  prime:{label:"Prime Trackon.in",multiplier:2,couriers:["Trackon.in"]}
 };
@@ -1789,22 +2091,30 @@ function getDeliverySpeed(){
  return document.querySelector('input[name="deliverySpeed"]:checked')?.value || "surface";
 }
 
+function getPaymentMode(){
+ return document.querySelector('input[name="paymentMode"]:checked')?.value || "prepaid";
+}
+
 function syncDeliveryControls(){
  const batterySelected=hasSelectedBatteryItem();
+ const paymentMode=getPaymentMode();
  const airOption=document.getElementById("speedAirOption");
  const primeOption=document.getElementById("speedPrimeOption");
  const notice=document.getElementById("batteryAirNotice");
- if(airOption) airOption.classList.toggle("hidden-by-battery",batterySelected);
- if(primeOption) primeOption.classList.toggle("hidden-by-battery",batterySelected);
+ const surfaceOnly=batterySelected || paymentMode==="cod";
+ if(airOption) airOption.classList.toggle("hidden-by-battery",surfaceOnly);
+ if(primeOption) primeOption.classList.toggle("hidden-by-battery",surfaceOnly);
  if(notice) notice.classList.toggle("show",batterySelected);
 
- if(batterySelected && getDeliverySpeed()!=="surface"){
+ if(surfaceOnly && getDeliverySpeed()!=="surface"){
    const surfaceRadio=document.querySelector('input[name="deliverySpeed"][value="surface"]');
    if(surfaceRadio) surfaceRadio.checked=true;
  }
 
  const speed=getDeliverySpeed();
- const allowed=DELIVERY_SPEEDS[speed].couriers;
+ const allowed=paymentMode==="cod"
+   ? ["Delhivery.com","BlueDart","Ecom Express","XpressBees"]
+   : ["Trackon.in","Delhivery.com","BlueDart","Ecom Express","XpressBees","Speed Post","Shreemaruti.com","Dtdc.in"];
  const select=document.getElementById("courier");
  if(select){
    const previous=select.value;
@@ -1819,9 +2129,21 @@ function onDeliverySpeedChange(){
  render();
 }
 
+function onPaymentModeChange(){
+ if(getPaymentMode()==="cod"){
+   const productTotal=buildOrderSummary().productTotal;
+   if(productTotal<2500){
+     alert("COD is available only for product orders of ₹2,500 or more.");
+     const prepaidRadio=document.querySelector('input[name="paymentMode"][value="prepaid"]');
+     if(prepaidRadio) prepaidRadio.checked=true;
+   }
+ }
+ syncDeliveryControls();
+ render();
+}
+
 function courierBaseRate(courier){
- if(courier==="Delhivery.com" || courier==="BlueDart" || courier==="Ecom Express") return 300;
- if(courier==="Speed Post") return 150;
+ if(["Speed Post","Delhivery.com","BlueDart","Ecom Express","XpressBees"].includes(courier)) return 200;
  return 100;
 }
 
@@ -1829,8 +2151,10 @@ function getCourierCalculation(chargeableKg){
  const speed=syncDeliveryControls();
  const courier=document.getElementById("courier")?.value || "Trackon.in";
  const meta=DELIVERY_SPEEDS[speed];
- const courierCharge=Math.round(chargeableKg*courierBaseRate(courier)*meta.multiplier);
- return {speed,courier,courierCharge,label:meta.label};
+ const paymentMode=getPaymentMode();
+ const speedMultiplier=paymentMode==="cod" ? 1 : meta.multiplier;
+ const courierCharge=Math.round(chargeableKg*courierBaseRate(courier)*speedMultiplier);
+ return {speed,courier,courierCharge,label:meta.label,paymentMode};
 }
 
 function render(){
@@ -1880,26 +2204,15 @@ function render(){
  const topCartItemCount=document.getElementById("topCartItemCount");
  if(topCartItemCount) topCartItemCount.innerText=itemCount;
 
- const packedWeight = totalWeight + (itemCount>0 ? Math.ceil(totalWeight/1000)*100 : 0);
+ const packingWeight = itemCount>0 ? Math.ceil(totalWeight/1000)*300 : 0;
+ const packedWeight = totalWeight + packingWeight;
  const chargeableKg = itemCount>0 ? Math.ceil(packedWeight/1000) : 0;
- const delivery=getCourierCalculation(chargeableKg);
- const courierCharge=delivery.courierCharge;
- const grandTotal = total + courierCharge;
- document.getElementById("courierCharge").innerText=courierCharge;
- document.getElementById("grandTotal").innerText=grandTotal;
+ document.getElementById("packingWeight").innerText=packingWeight;
  const courierKgEl=document.getElementById("courierWeightKg");
  if(courierKgEl) courierKgEl.innerText=chargeableKg;
- const deliverySpeedLabel=document.getElementById("deliverySpeedLabel");
- if(deliverySpeedLabel) deliverySpeedLabel.innerText=delivery.label;
 
  document.getElementById("floatingSummary").innerHTML =
- `Products: ${itemCount} | Amount: ₹${total} | ${delivery.label} | Courier Weight: ${chargeableKg}kg | Courier: ₹${courierCharge} | Total: ₹${grandTotal}`;
-
- const upi='upi://pay?pa=paytmqr68kzsc@ptys&pn=Surender%20Kaur&am='+grandTotal+'&cu=INR';
- const qr=document.getElementById('upiQr');
- if(qr){
-   qr.src='https://api.qrserver.com/v1/create-qr-code/?size=90x90&data='+encodeURIComponent(upi);
- }
+ `Products: ${itemCount} | Amount: ₹${total} | Weight: ${totalWeight}g | Select payment & delivery on next page`;
 
  generateCombinedPoster();
  generateBoxPlanner();
@@ -2151,6 +2464,7 @@ function downloadCombinedPoster(){
 
 
 function orderWhatsApp(){
+ return goDetails();
  let lines=[],total=0,totalWeight=0,n=1;
 
  products.forEach((p,i)=>{
@@ -2178,16 +2492,26 @@ function orderWhatsApp(){
  });
 
  if(!lines.length){alert("Please select products first");return;}
+ if(getPaymentMode()==="cod" && total<2500){
+   alert("COD is available only for product orders of ₹2,500 or more.");
+   return;
+ }
 
- const packedWeight = totalWeight + (totalWeight>0 ? Math.ceil(totalWeight/1000)*100 : 0);
+ const packingWeight = totalWeight>0 ? Math.ceil(totalWeight/1000)*300 : 0;
+ const packedWeight = totalWeight + packingWeight;
  const chargeableKg = packedWeight>0 ? Math.ceil(packedWeight/1000) : 0;
  const delivery=getCourierCalculation(chargeableKg);
  const courier=delivery.courier;
  const courierCharge=delivery.courierCharge;
- const grandTotal = total + courierCharge;
+ const subtotalWithCourier=total+courierCharge;
+ const vasCharge=Math.ceil(subtotalWithCourier*0.02);
+ const grandTotal = subtotalWithCourier+vasCharge;
+ const paymentType=delivery.paymentMode==="cod"?"COD":"Prepaid";
+ const advanceAmount=delivery.paymentMode==="cod"?Math.max(600,Math.ceil(grandTotal*0.20)):grandTotal;
+ const restAmount=delivery.paymentMode==="cod"?grandTotal-advanceAmount:0;
  const fillLink = window.location.origin + window.location.pathname.replace("index","order-prefill") + `?grandTotal=${grandTotal}`;
 
- let msg=`🟢 Prepaid Order
+ let msg=`${delivery.paymentMode==="cod"?"🟠 COD Order":"🟢 Prepaid Order"}
 
 📦 Product Summary
 
@@ -2195,19 +2519,31 @@ ${lines.join('\n')}
 
 ⚡ Delivery Speed: ${delivery.label}
 
+💳 Payment Type: ${paymentType}
+
+${delivery.paymentMode==="cod"?"📌 COD Rule: Minimum ₹2,500 product order • Advance ₹600 or 20%, whichever is higher\n":""}
 🚚 Courier: ${courier}
+
+⚖️ Product Weight: ${totalWeight} g
+
+📦 Packing Weight: ${packingWeight} g
 
 ⚖️ Chargeable Courier Weight: ${chargeableKg} kg
 
 🚚 Courier Charges: ₹${courierCharge}
 
+➕ VAS (2% of Product + Courier Total): ₹${vasCharge}
+
 🧾 Grand Total: ₹${grandTotal}
 
+💰 Amount Paid / Advance: ₹${advanceAmount}
+
+${delivery.paymentMode==="cod"?`💵 Rest on Delivery: ₹${restAmount}\n`:""}
 ━━━━━━━━━━━━━━
 
 📝 Fill Your Details
 
-https://gamesplanet13.github.io/arcade-accessories-/order-prefill.html?grandTotal=${grandTotal}`;
+https://gamesplanet13.github.io/arcade-accessories-/order-prefill.html?grandTotal=${grandTotal}&paymentMode=${delivery.paymentMode}&advanceAmount=${advanceAmount}&restAmount=${restAmount}`;
 
  window.open("https://wa.me/917983624797?text="+encodeURIComponent(msg));
 }
@@ -2219,12 +2555,14 @@ function buildOrderSummary(){
  let productTotal=0;
  let totalWeight=0;
  let totalQuantity=0;
+ let hasBatteryItem=false;
 
  products.forEach((p,i)=>{
    if(p.variants){
      p.variants.forEach(v=>{
        const quantity=state['v_'+i+'_'+v]||0;
        if(quantity>0){
+         if(p.containsBattery) hasBatteryItem=true;
          const lineTotal=p.price*quantity;
          const lineWeight=p.weight*quantity;
          items.push({
@@ -2244,6 +2582,7 @@ function buildOrderSummary(){
 
    const quantity=state[i]||0;
    if(quantity>0){
+     if(p.containsBattery) hasBatteryItem=true;
      const lineTotal=p.price*quantity;
      const lineWeight=p.weight*quantity;
      items.push({
@@ -2260,7 +2599,7 @@ function buildOrderSummary(){
    }
  });
 
- return {items,productTotal,totalWeight,totalQuantity};
+ return {items,productTotal,totalWeight,totalQuantity,hasBatteryItem};
 }
 
 function goDetails(){
@@ -2270,23 +2609,15 @@ function goDetails(){
 
  if(total<=0){alert("Please select products first");return;}
 
- const packedWeight = totalWeight + (totalWeight>0 ? Math.ceil(totalWeight/1000)*100 : 0);
-
+ const packingWeight = totalWeight>0 ? Math.ceil(totalWeight/1000)*300 : 0;
+ const packedWeight = totalWeight + packingWeight;
  const chargeableKg = packedWeight>0 ? Math.ceil(packedWeight/1000) : 0;
- const delivery=getCourierCalculation(chargeableKg);
- const courierCharge=delivery.courierCharge;
-
- const grandTotal = total + courierCharge;
-
+ summary.packingWeight=packingWeight;
  summary.packedWeight=packedWeight;
  summary.chargeableKg=chargeableKg;
- summary.deliverySpeed=delivery.label;
- summary.courier=delivery.courier;
- summary.courierCharge=courierCharge;
- summary.grandTotal=grandTotal;
  localStorage.setItem("gp_order_summary",JSON.stringify(summary));
 
- window.location.href=`order-prefill.html?grandTotal=${grandTotal}&deliverySpeed=${encodeURIComponent(delivery.label)}&courier=${encodeURIComponent(delivery.courier)}&courierCharge=${courierCharge}`;
+ window.location.href="order-prefill.html";
 }
 
 

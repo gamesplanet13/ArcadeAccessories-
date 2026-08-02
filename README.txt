@@ -1,34 +1,18 @@
-GAMES PLANET – GITHUB PAGES + AI READY
+GAMES PLANET FULL STORE PACKAGE — 01 AUG 2026
 
-Your live page:
-https://gamesplanet13.github.io/arcade-accessories-/
+Open index.html to view the complete product page.
+The cart is saved in the browser and continues to order-prefill.html.
 
-UPLOAD TO THIS GITHUB REPOSITORY:
-gamesplanet13/arcade-accessories-
+Upload the complete folder without changing its internal structure:
+  index.html
+  order-prefill.html
+  images/jpeg/
+  images/png/
+  manifest.webmanifest
+  sw.js
+  QR and app icon files
 
-1. Upload the complete contents of this folder to the repository.
-2. Keep index.html and the images folder together.
-3. All product images used by the page are optimized progressive JPEG files inside images/.
-4. Do not move or rename files inside images/ unless the matching paths in index.html are updated.
-5. Commit changes. GitHub Pages will update automatically.
-
-IMAGE OPTIMIZATION
-- Main page image references: images/*.jpeg
-- Maximum image dimensions: 1600 x 1600 px
-- JPEG quality: 88
-- Progressive loading and lazy loading enabled
-- Duplicate root image files removed
-
-WORKER
-The Worker already allows this GitHub Pages origin:
-https://gamesplanet13.github.io
-
-Important: CORS checks the origin only, not the /arcade-accessories-/ path, so the live page URL is fully covered.
-
-Worker URL connected in index.html:
-https://divine-rain-b3ae.gnsl-khalsa.workers.dev
-
-Test only on the live URL:
-https://gamesplanet13.github.io/arcade-accessories-/
-
-Do not test from content://downloads because Android may block local image loading.
+Notes:
+- Supplied product photos are locally bundled in sharpened 1200 x 1200 catalog format.
+- L01, SL-20 and DY26 use a clearly marked image-pending placeholder because an exact source photo was not supplied.
+- HDD cover, laptop sleeve, laptop stand and several phone-cooler packed dimensions/weights are approximate and should be confirmed before live courier billing.
