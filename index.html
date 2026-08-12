@@ -250,6 +250,14 @@ h2{
 }
 .image-row img:hover{transform:scale(1.05);box-shadow:0 10px 22px rgba(0,0,0,.25)}
 .image-row.multi-image img{width:68px;height:68px;border-radius:10px}
+.category-panel{margin:15px 0 18px;border:1px solid rgba(34,211,238,.2);border-radius:18px;overflow:hidden;background:rgba(3,10,23,.45)}
+.category-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border:0;background:linear-gradient(90deg,rgba(8,47,73,.96),rgba(30,41,59,.96));color:#c8f7ff;font-size:17px;font-weight:900;text-align:left;cursor:pointer}
+.category-toggle .cat-count{font-size:12px;color:#e0f2fe;background:rgba(255,255,255,.1);padding:5px 9px;border-radius:999px}
+.category-toggle .cat-arrow{font-size:18px;transition:transform .2s ease}
+.category-panel.is-open .cat-arrow{transform:rotate(180deg)}
+.category-products{display:none;padding:12px}
+.category-panel.is-open .category-products{display:block}
+.catalog-updated-badge{margin:10px 0 16px;padding:12px 14px;border-radius:14px;background:linear-gradient(90deg,rgba(6,182,212,.18),rgba(124,58,237,.18));border:1px solid rgba(103,232,249,.45);color:#e0fbff;font-weight:800;text-align:center}
 .product-features{
   margin:10px 0 0;
   padding:10px 12px;
@@ -261,53 +269,9 @@ h2{
   line-height:1.55;
 }
 .product-features div+div{margin-top:3px}
-.category-section{
-  margin:14px 0;
-  border:1px solid rgba(34,211,238,.24);
-  border-radius:18px;
-  background:rgba(7,20,37,.68);
-  overflow:hidden;
-  box-shadow:0 10px 26px rgba(0,0,0,.16);
-}
-.category-toggle{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  width:100%;
-  margin:0;
-  padding:15px 17px;
-  border:0;
-  background:linear-gradient(90deg,rgba(14,116,144,.23),rgba(76,29,149,.18));
-  color:#67e8f9;
-  text-align:left;
-  font:inherit;
-  font-size:clamp(17px,3.8vw,23px);
-  font-weight:900;
-  cursor:pointer;
-}
-.category-toggle:hover{background:linear-gradient(90deg,rgba(14,116,144,.34),rgba(76,29,149,.28))}
-.category-toggle:focus-visible{outline:3px solid #22d3ee;outline-offset:-3px}
-.category-toggle-icon{
-  display:grid;
-  place-items:center;
-  width:32px;
-  height:32px;
-  flex:0 0 32px;
-  border-radius:50%;
-  background:rgba(255,255,255,.10);
-  color:#fff;
-  font-size:24px;
-  line-height:1;
-}
-.category-products{display:none;padding:12px}
-.category-section.open>.category-products{display:block}
-.category-section.open>.category-toggle .category-toggle-icon{transform:rotate(45deg)}
-.category-section[hidden]{display:none!important}
 @media(max-width:520px){
   .image-row img{width:86px;height:86px}
   .image-row.multi-image img{width:62px;height:62px}
-  .category-products{padding:8px}
 }
 .info{
   display:flex;
@@ -539,16 +503,17 @@ select{
   object-fit:contain;
   box-shadow:0 0 35px rgba(0,0,0,.68);
 }
+.modal-image-box{position:relative;display:inline-flex;max-width:95vw;max-height:90vh}
 .close-btn{
-  position:fixed;
-  top:16px;right:18px;
-  width:48px;height:48px;
+  position:absolute;
+  top:10px;right:10px;
+  width:42px;height:42px;
   border-radius:50%;
   background:linear-gradient(145deg,#b91c1c,#ef4444);
   color:#fff;
   font-size:30px;
   font-weight:900;
-  line-height:46px;
+  line-height:40px;
   text-align:center;
   cursor:pointer;
   z-index:100000;
@@ -1206,6 +1171,7 @@ img,canvas{
 
 </style>
 
+<link rel="stylesheet" href="assets/product-3d-viewer.css">
 </head>
 
 <body>
@@ -1271,6 +1237,7 @@ img,canvas{
 </div>
 
 <div class="catalog-controls">
+  <a href="customize-box.html" style="display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 16px;margin-right:10px;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;text-decoration:none;font-weight:900;box-shadow:0 8px 22px #f59e0b40">🕹️ Customize Your Arcade Box</a>
   <div class="catalog-select-wrap">
     <select class="catalog-select" id="catalogFilter" aria-label="Product category" onchange="filterCatalog(this.value)">
       <option value="all">Category: All</option>
@@ -1296,7 +1263,7 @@ img,canvas{
     <button type="button" class="app-install-btn" id="installAndroidApp">📲 Install Android App</button>
   </div>
   <div class="app-live-grid">
-    <iframe class="latest-video" src="https://www.youtube.com/embed/xGR0vUM1-Jw?autoplay=1&mute=1&controls=1&loop=1&playlist=xGR0vUM1-Jw&playsinline=1" title="Games Planet current video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    <iframe class="latest-video" src="https://www.youtube.com/embed/FhGGcAHPAfI?autoplay=1&mute=1&controls=1&loop=1&playlist=FhGGcAHPAfI&playsinline=1" title="Games Planet current video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
     <div class="latest-products-window">
       <div class="latest-products-track" id="latestProductsTrack"></div>
     </div>
@@ -1315,6 +1282,7 @@ img,canvas{
 <div class="actions">
   <button class="whatsapp" onclick="orderWhatsApp()">Order on WhatsApp</button>
   <button class="details" onclick="goDetails()">Fill Your Details</button>
+  <button class="details" onclick="openInvoiceBuilder()">Create Invoice</button>
   <button class="reset" onclick="clearCart()">Reset Cart</button>
  </div>
 
@@ -1330,8 +1298,10 @@ img,canvas{
 </div></div>
 
 <div id="imgModal">
- <div class="close-btn" onclick="closeImg()">×</div>
- <img id="modalImg">
+ <div class="modal-image-box">
+  <img id="modalImg">
+  <div class="close-btn" onclick="closeImg()" role="button" aria-label="Close image">×</div>
+ </div>
 </div>
 
 
@@ -1533,8 +1503,12 @@ images:[
 "images/jpeg/remote-lead.jpeg"
 ]},
 
-{name:"12 Core Wire (Per Meter)",category:"Arcade Box Accessories",price:60,weight:70,dimensions:[10,5,3],images:[
-"images/jpeg/12-core-wire.jpeg"
+{name:"10 Core Wire (Per Meter)",category:"Arcade Box Accessories",price:50,weight:70,dimensions:[10,5,3],images:[
+"images/jpeg/10-core-wire.jpg"
+]},
+
+{name:"USB Gamepad",category:"Gaming Accessories",price:364,weight:220,dimensions:[19,20,10],images:[
+"images/usb-gamepad.svg"
 ]},
 
 {
@@ -1712,7 +1686,7 @@ images:["images/jpeg/pxn-v3-pro-black.jpeg","images/jpeg/pxn-v3-pro-orange.jpeg"
 // PS2 FMCB-page prices below are product-only prices.
 // ₹99 prepaid courier included on the FMCB page has been removed here,
 // because this catalog calculates courier separately from selected weight.
-const PS2_TOP_GAMES_VIDEO="https://youtu.be/xGR0vUM1-Jw";
+const PS2_TOP_GAMES_VIDEO="https://youtube.com/shorts/FhGGcAHPAfI?si=Gey_KilicyywK8bj";
 const PS2_OPTIONAL_SELECTOR="https://gamesplanet13.github.io/ps2gameselector/";
 const ps2GameDrivePrices=[
   {storage:"64GB PD 2.0",count:21,usbTop:1101,usbOptional:1151},
@@ -1864,7 +1838,7 @@ products.push(
     compatibility:"Laptop and tablet",
     features:["Foldable metal frame","Multi-angle adjustment","Anti-slip pads","Approximate packed size and weight","Price includes GST"],images:["images/jpeg/folding-metal-laptop-stand.jpg"]
   },
-  {name:"L01 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:666,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","Exact model image pending"],images:["images/jpeg/phone-cooler-image-pending.jpg"]},
+  {name:"L01 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:666,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","RGB lighting","Clip-on design"],images:["images/jpeg/l01-mobile-phone-cooler.jpg","images/png/l01-mobile-phone-cooler.png"]},
   {name:"SL-16 Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:120,dimensions:[12,9,5],features:["Semiconductor cooling plate","RGB lighting","Adjustable cooling gears"],images:["images/jpeg/phone-cooler-sl16.jpg"]},
   {name:"SL-25 15W Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:985,weight:130,dimensions:[10,10,5],features:["15W high-power cooling","RGB lighting","Cold-dome semiconductor plate"],images:["images/jpeg/phone-cooler-sl25.jpg"]},
   {name:"SL01 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:120,dimensions:[12,9,5],features:["Instant phone cooling","RGB fan","Clip-on design"],images:["images/jpeg/phone-cooler-sl01.jpg"]},
@@ -1874,7 +1848,7 @@ products.push(
   {name:"SL-31 Compact Mobile Phone Cooler",category:"Mobile Phone Coolers",price:690,weight:115,dimensions:[11,8,5],features:["Compact portable design","Digital temperature display","RGB lighting"],images:["images/jpeg/phone-cooler-sl31.jpg"]},
   {name:"DY58 / SL09 Dual Semiconductor Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1020,weight:150,dimensions:[12,9,6],features:["Dual-core semiconductor cooling","RGB lighting","3-level control","5V 3A / 15W input"],images:["images/jpeg/dy58-sl09-dual-phone-cooler.jpg"]},
   {name:"SL-14 Rechargeable Battery Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1221,weight:180,dimensions:[13,9,5],containsBattery:true,features:["Built-in rechargeable battery / power bank","Portable cable-free cooling","Digital temperature display"],images:["images/jpeg/phone-cooler-sl14.jpg"]},
-  {name:"DY26 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:631,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","Exact model image pending"],images:["images/jpeg/phone-cooler-image-pending.jpg"]},
+  {name:"DY26 Mobile Phone Cooler",category:"Mobile Phone Coolers",price:631,weight:120,dimensions:[12,9,5],features:["Gaming phone cooling fan","Digital temperature display","RGB lighting"],images:["images/jpeg/dy26-mobile-phone-cooler.jpg","images/png/dy26-mobile-phone-cooler.png"]},
   {name:"SL-22 Dual-Fan Mobile Phone Cooler",category:"Mobile Phone Coolers",price:1162,weight:170,dimensions:[14,9,5],features:["Dual cooling fans","Digital temperature display","Adjustable cooling controls","RGB lighting"],images:["images/jpeg/phone-cooler-sl22.jpg"]}
 );
 
@@ -1912,23 +1886,32 @@ const categoryOrder=[
  ,"Mobile Phone Coolers"
 ];
 
-categoryOrder.forEach(cat=>{
+container.innerHTML=`<div class="catalog-updated-badge">✨ PRODUCT CATALOG • Category खोलें/बंद करें • Picture पर tap करके full view देखें</div>`;
+
+categoryOrder.forEach((cat,categoryIndex)=>{
  const catProducts=products.filter(p=>p.category===cat);
  if(!catProducts.length) return;
 
- const isDefaultOpen=cat==="Arcade Box Accessories";
- container.innerHTML += `<section class="category-section${isDefaultOpen?' open':''}" data-category="${cat}">
- <button type="button" class="category-toggle" aria-expanded="${isDefaultOpen}" onclick="toggleCategory(this)">
-  <span>${cat}</span><span class="category-toggle-icon" aria-hidden="true">+</span>
- </button>
- <div class="category-products">`;
+ const section=document.createElement('section');
+ section.className=`category-panel ${categoryIndex===0?'is-open':''}`;
+ section.dataset.category=cat;
+ section.innerHTML=`<button class="category-toggle" type="button" aria-expanded="${categoryIndex===0?'true':'false'}">
+   <span>${cat}</span><span class="cat-count">${catProducts.length} Products</span><span class="cat-arrow">⌄</span>
+ </button><div class="category-products"></div>`;
+ const categoryProducts=section.querySelector('.category-products');
+ section.querySelector('.category-toggle').addEventListener('click',event=>{
+   const panel=event.currentTarget.closest('.category-panel');
+   panel.classList.toggle('is-open');
+   event.currentTarget.setAttribute('aria-expanded',panel.classList.contains('is-open')?'true':'false');
+ });
+ container.appendChild(section);
 
  catProducts.forEach((p)=>{
  const i=products.indexOf(p);
  if(state[i]===undefined) state[i]=0;
 
- const imgs=p.images.map(img=>`<img src="${img}" loading="lazy" decoding="async" alt="${p.name}" onclick="openImg('${img}')">`).join("");
- container.innerHTML+=`
+ const imgs=p.images.map((img,imageIndex)=>`<img src="${img}" loading="lazy" decoding="async" alt="${p.name} — view ${imageIndex+1}" onclick="openImg('${img}',this)">`).join("");
+ categoryProducts.insertAdjacentHTML('beforeend',`
  <div class="product" data-category="${cat}">
   <b class="product-title">${p.name}</b>
   <div class="product-specs">
@@ -1950,26 +1933,17 @@ categoryOrder.forEach(cat=>{
     <button onclick="updateQty(${i},1)">+</button>
    </div>`}
   </div>
- </div>`;
+ </div>`);
 });
- container.innerHTML += `</div></section>`;
 });
-
-function toggleCategory(button,forceOpen){
- const section=button.closest('.category-section');
- if(!section) return;
- const shouldOpen=typeof forceOpen==='boolean' ? forceOpen : !section.classList.contains('open');
- section.classList.toggle('open',shouldOpen);
- button.setAttribute('aria-expanded',String(shouldOpen));
-}
 
 function filterCatalog(category){
- document.querySelectorAll("#products > .category-section").forEach(section=>{
-   const matches=category==="all" || section.dataset.category===category;
-   section.hidden=!matches;
-   if(category!=="all" && matches){
-     const button=section.querySelector('.category-toggle');
-     if(button) toggleCategory(button,true);
+ document.querySelectorAll("#products .category-panel").forEach(panel=>{
+   const show=category==="all" || panel.dataset.category===category;
+   panel.style.display=show?"":"none";
+   if(category!=="all" && show){
+     panel.classList.add('is-open');
+     panel.querySelector('.category-toggle')?.setAttribute('aria-expanded','true');
    }
  });
 }
@@ -2147,6 +2121,35 @@ function courierBaseRate(courier){
  return 100;
 }
 
+/* Automatic bulk/quantity pricing. Product names must match the catalogue. */
+const QUANTITY_PRICE_RULES={
+ "Push Button":{min:50,price:30},
+ "Push Button (Imported)":{min:50,price:44},
+ "Black Switch Button":{min:50,price:14},
+ "MD Switch Button":{min:50,price:48},
+ "Coin Drop Switch Button":{min:50,price:43},
+ "Rasila Handle (Without Switch)":{min:20,price:195},
+ "Rasila Handle (With Switch)":{min:20,price:251},
+ "MD Handle (With Switch)":{min:20,price:550},
+ "Coin Acrylic Machine":{min:20,price:190},
+ "10 Core Wire (Per Meter)":{min:20,price:48},
+ "Remote Lead":{min:20,price:95},
+ "Remote Plate":{min:20,price:290},
+ "USB Gamepad":{min:10,price:350},
+ "PS2 Wired Controller (Replica)":{min:10,price:350},
+ "PS2 Wireless Controller":{min:10,price:480},
+ "Matrix Modbo 5.0 Modchip":{min:10,price:530}
+};
+function selectedProductQuantity(p,i){
+ let quantity=Number(state[i]||0);
+ if(p.variants) p.variants.forEach(v=>quantity+=Number(state['v_'+i+'_'+v]||0));
+ return quantity;
+}
+function effectiveUnitPrice(p,i){
+ const rule=QUANTITY_PRICE_RULES[p.name];
+ return rule&&selectedProductQuantity(p,i)>=rule.min?rule.price:p.price;
+}
+
 function getCourierCalculation(chargeableKg){
  const speed=syncDeliveryControls();
  const courier=document.getElementById("courier")?.value || "Trackon.in";
@@ -2165,21 +2168,21 @@ function render(){
     p.variants.forEach(v=>{
       const q=state['v_'+i+'_'+v]||0;
       if(q>0){
-        const sp=p.price*q, sw=p.weight*q;
+        const unitPrice=effectiveUnitPrice(p,i), sp=unitPrice*q, sw=p.weight*q;
         total+=sp; totalWeight+=sw;
-        html+=`<div style="border-bottom:1px dashed #444;margin-bottom:8px"><b>${p.name} - ${v}</b><br>₹${p.price} × ${q} = ₹${sp}<br>${p.weight}g × ${q} = ${sw}g</div>`;
+        html+=`<div style="border-bottom:1px dashed #444;margin-bottom:8px"><b>${p.name} - ${v}</b><br>₹${unitPrice} × ${q} = ₹${sp}${unitPrice!==p.price?' <small>(quantity price)</small>':''}<br>${p.weight}g × ${q} = ${sw}g</div>`;
       }
     });
   }
   if(state[i]>0){
    const qty=state[i];
-   const sp=p.price*qty;
+   const unitPrice=effectiveUnitPrice(p,i), sp=unitPrice*qty;
    const sw=p.weight*qty;
    total+=sp; totalWeight+=sw;
    html+=`
    <div style="border-bottom:1px dashed #444;margin-bottom:8px">
     <b>${p.name}</b><br>
-    ₹${p.price} × ${qty} = ₹${sp}<br>
+    ₹${unitPrice} × ${qty} = ₹${sp}${unitPrice!==p.price?' <small>(quantity price)</small>':''}<br>
     ${p.weight}g × ${qty} = ${sw}g
    </div>`;
   }
@@ -2225,7 +2228,7 @@ function toTransparentPngAsset(src){
   if(!src) return "";
   return src
     .replace(/^images\/jpeg\//,"images/png/")
-    .replace(/\.jpeg(?:\?.*)?$/i,".png");
+    .replace(/\.(?:jpe?g)(?:\?.*)?$/i,".png");
 }
 
 function getProductImageForVariant(product, variant){
@@ -2251,7 +2254,7 @@ function getSelectedPosterItems(){
             qty,
             image:getProductImageForVariant(p,v),
             fallbackImage:(p.images&&p.images[0])||"",
-            isWire:/12\s*Core\s*Wire/i.test(p.name),
+            isWire:/10\s*Core\s*Wire/i.test(p.name),
             repeatImage:false
           });
         }
@@ -2266,7 +2269,7 @@ function getSelectedPosterItems(){
         qty,
         image:getProductImageForVariant(p,""),
         fallbackImage:(p.images&&p.images[0])||"",
-        isWire:/12\s*Core\s*Wire/i.test(p.name),
+        isWire:/10\s*Core\s*Wire/i.test(p.name),
         repeatImage:false
       });
     }
@@ -2563,15 +2566,19 @@ function buildOrderSummary(){
        const quantity=state['v_'+i+'_'+v]||0;
        if(quantity>0){
          if(p.containsBattery) hasBatteryItem=true;
-         const lineTotal=p.price*quantity;
+         const unitPrice=effectiveUnitPrice(p,i);
+         const lineTotal=unitPrice*quantity;
          const lineWeight=p.weight*quantity;
          items.push({
            name:`${p.name} - ${v}`,
            quantity,
-           unitPrice:p.price,
+           unitPrice,
+           baseUnitPrice:p.price,
            lineTotal,
            unitWeight:p.weight,
-           lineWeight
+           lineWeight,
+           dimensions:p.dimensions||[],
+           automaticQuantityPrice:unitPrice!==p.price
          });
          productTotal+=lineTotal;
          totalWeight+=lineWeight;
@@ -2583,15 +2590,19 @@ function buildOrderSummary(){
    const quantity=state[i]||0;
    if(quantity>0){
      if(p.containsBattery) hasBatteryItem=true;
-     const lineTotal=p.price*quantity;
+     const unitPrice=effectiveUnitPrice(p,i);
+     const lineTotal=unitPrice*quantity;
      const lineWeight=p.weight*quantity;
      items.push({
        name:p.name,
        quantity,
-       unitPrice:p.price,
+       unitPrice,
+       baseUnitPrice:p.price,
        lineTotal,
        unitWeight:p.weight,
-       lineWeight
+       lineWeight,
+       dimensions:p.dimensions||[],
+       automaticQuantityPrice:unitPrice!==p.price
      });
      productTotal+=lineTotal;
      totalWeight+=lineWeight;
@@ -2618,6 +2629,17 @@ function goDetails(){
  localStorage.setItem("gp_order_summary",JSON.stringify(summary));
 
  window.location.href="order-prefill.html";
+}
+
+function openInvoiceBuilder(){
+ const summary=buildOrderSummary();
+ if(summary.productTotal<=0){alert("Please select products first");return;}
+ const packingWeight = summary.totalWeight>0 ? Math.ceil(summary.totalWeight/1000)*300 : 0;
+ summary.packingWeight=packingWeight;
+ summary.packedWeight=summary.totalWeight+packingWeight;
+ summary.chargeableKg=summary.packedWeight>0 ? Math.ceil(summary.packedWeight/1000) : 0;
+ localStorage.setItem("gp_invoice_summary",JSON.stringify(summary));
+ window.open("invoice.html","_blank");
 }
 
 
@@ -4025,6 +4047,7 @@ if(document.readyState==="loading"){
 }
 
 </script>
+<script src="assets/product-3d-viewer.js"></script>
 
 
 <div class="footer-card"><div class="footer-inner">
@@ -4055,7 +4078,7 @@ Rampur, U.P – 244901</p>
     <div class="poster-stage">
       <canvas id="combinedPoster" width="1600" height="900"></canvas>
     </div>
-    <div class="poster-note">Selected products and their total quantities automatically appear in one catalog-style picture. For 12 Core Wire, the selected quantity is shown as total meter length.</div>
+    <div class="poster-note">Selected products and their total quantities automatically appear in one catalog-style picture. For 10 Core Wire, the selected quantity is shown as total meter length.</div>
   </div>
 </div>
 <div class="combined-poster-wrap" id="boxPlannerSection">
