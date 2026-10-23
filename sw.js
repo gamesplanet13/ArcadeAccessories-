@@ -1,7 +1,7 @@
-const CACHE_NAME="games-planet-live-v9";
+const CACHE_NAME="games-planet-images-20261023";
 const APP_SHELL=[
   "./","./index.html","./Simple.html","./order-prefill.html","./manifest.webmanifest",
-  "./games-planet-logo-transparent.png","./games-planet-icon-192.png","./games-planet-icon-512.png",
+  "./images/games-planet-logo-transparent.png","./images/games-planet-icon-192.png","./images/games-planet-icon-512.png",
   "./01-Current-ac-qr.jpg",
   "./images/jpeg/best-av-cable-for-ps2.jpeg","./images/png/best-av-cable-for-ps2.png",
   "./images/jpeg/av-component-connector.jpeg","./images/png/av-component-connector.png",
