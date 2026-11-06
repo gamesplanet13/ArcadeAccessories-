@@ -1857,6 +1857,13 @@ const colorDots={
 "Pink":"#FF69B4","Green":"#00CC44","Black":"#000000",
 "White":"#FFFFFF","Blue":"#0066FF","Orange":"#FF7A00","Purple":"#8A2BE2"
 };
+// Unavailable variants stay in the archived source data, but never appear for sale.
+const legacyUnavailable={ 'Push Button':['Yellow'], 'MD Handle (With Switch)':['Black'] };
+for(const p of products){
+ const missing=legacyUnavailable[p.name];
+ if(missing){p.unavailableVariants=[...new Set([...(p.unavailableVariants||[]),...missing])];p.variantStocks={...(p.variantStocks||{})};for(const v of missing)p.variantStocks[v]=0;}
+}
+const visibleLegacy=(p,v='')=>!!p&&p.stock!==0&&p.available!==false&&!p.hiddenFromStore&&(v?p.variantStocks?.[v]!==0&&!p.unavailableVariants?.includes(v):true);
 const state = JSON.parse(localStorage.getItem("gp_cart") || "{}");
 const container=document.getElementById("products");
 
@@ -1889,7 +1896,7 @@ const categoryOrder=[
 container.innerHTML=`<div class="catalog-updated-badge">✨ PRODUCT CATALOG • Category खोलें/बंद करें • Picture पर tap करके full view देखें</div>`;
 
 categoryOrder.forEach((cat,categoryIndex)=>{
- const catProducts=products.filter(p=>p.category===cat&&p.available!==false&&p.hiddenFromStore!==true&&p.stock!==0);
+ const catProducts=products.filter(p=>p.category===cat&&visibleLegacy(p));
  if(!catProducts.length) return;
 
  const section=document.createElement('section');
@@ -1927,7 +1934,7 @@ categoryOrder.forEach((cat,categoryIndex)=>{
     <div class="price">${p.priceLabel || ("₹"+p.price)}</div>
     <small>${p.weight} g / piece${p.compatibility?'<br><b>Compatibility:</b> '+p.compatibility:''}</small>
    </div>
-   ${p.variants?`<div style="min-width:220px">${p.variants.map(v=>`<div style="display:flex;justify-content:space-between;align-items:center;margin:3px 0"><small><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${colorDots[v]||'#ccc'};border:2px solid #999;margin-right:6px;vertical-align:middle"></span>${v}</small><div class="qty"><button onclick="updateVariantQty(${i},'${v}',-1)">−</button><span id="vq${i}_${v.replace(/\s+/g,'_')}">${state['v_'+i+'_'+v]||0}</span><button onclick="updateVariantQty(${i},'${v}',1)">+</button></div></div>`).join('')}</div>`:`<div class="qty">
+   ${p.variants?`<div style="min-width:220px">${p.variants.filter(v=>visibleLegacy(p,v)).map(v=>`<div style="display:flex;justify-content:space-between;align-items:center;margin:3px 0"><small><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${colorDots[v]||'#ccc'};border:2px solid #999;margin-right:6px;vertical-align:middle"></span>${v}</small><div class="qty"><button onclick="updateVariantQty(${i},'${v}',-1)">−</button><span id="vq${i}_${v.replace(/\s+/g,'_')}">${state['v_'+i+'_'+v]||0}</span><button onclick="updateVariantQty(${i},'${v}',1)">+</button></div></div>`).join('')}</div>`:`<div class="qty">
     <button onclick="updateQty(${i},-1)">−</button>
     <span id="q${i}">${state[i]}</span>
     <button onclick="updateQty(${i},1)">+</button>
@@ -1951,7 +1958,7 @@ function filterCatalog(category){
 function renderLatestProducts(){
  const track=document.getElementById("latestProductsTrack");
  if(!track) return;
- const latest=products.slice(-12).reverse();
+ const latest=products.filter(p=>visibleLegacy(p)).slice(-12).reverse();
  const cards=latest.map(p=>`
    <div class="latest-mini-card">
      <img src="${p.images?.[0]||""}" alt="${p.name}" loading="lazy">
@@ -2039,6 +2046,7 @@ function updateQty(i,v){
 
 
 function updateVariantQty(i,v,val){
+ if(val>0&&!visibleLegacy(products[i],v))return;
  const k='v_'+i+'_'+v;
  state[k]=Math.max(0,(state[k]||0)+val);
  localStorage.setItem("gp_cart", JSON.stringify(state));
@@ -2164,8 +2172,10 @@ function render(){
  let html="", total=0, totalWeight=0;
 
  products.forEach((p,i)=>{
+  if(!visibleLegacy(p)){state[i]=0;for(const v of p.variants||[])state['v_'+i+'_'+v]=0;return;}
   if(p.variants){
     p.variants.forEach(v=>{
+      if(!visibleLegacy(p,v)){state['v_'+i+'_'+v]=0;return;}
       const q=state['v_'+i+'_'+v]||0;
       if(q>0){
         const unitPrice=effectiveUnitPrice(p,i), sp=unitPrice*q, sw=p.weight*q;
@@ -2471,8 +2481,10 @@ function orderWhatsApp(){
  let lines=[],total=0,totalWeight=0,n=1;
 
  products.forEach((p,i)=>{
+  if(!visibleLegacy(p)){state[i]=0;for(const v of p.variants||[])state['v_'+i+'_'+v]=0;return;}
   if(p.variants){
     p.variants.forEach(v=>{
+      if(!visibleLegacy(p,v)){state['v_'+i+'_'+v]=0;return;}
       const q=state['v_'+i+'_'+v]||0;
       if(q>0){
         const sp=p.price*q, sw=p.weight*q;
