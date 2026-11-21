@@ -1421,7 +1421,7 @@ name:"Push Button (Imported)",
 dimensions:[5,4,4],
 category:"Arcade Box Accessories",
 price:46,
-weight:12,
+weight:15,
 variants:["Ice Blue","Pink","Green","Yellow","Black"],
 variantImages:{
   "Ice Blue":"images/jpeg/imported-blue.jpeg",
@@ -1451,15 +1451,15 @@ images:[
 "images/jpeg/normal-switch-button.jpeg"
 ]},
 
-{name:"Coin Drop Switch Button",category:"Arcade Box Accessories",price:45,weight:12,dimensions:[11,4,2],images:[
+{name:"Coin Drop Switch Button",category:"Arcade Box Accessories",price:45,weight:25,dimensions:[11,4,2],images:[
 "images/jpeg/coindropswitch.jpeg"
 ]},
 
-{name:"Rasila Handle (Without Switch)",category:"Arcade Box Accessories",price:200,weight:280,dimensions:[14,11,8],images:[
+{name:"Rasila Handle (Without Switch)",category:"Arcade Box Accessories",price:200,weight:300,dimensions:[14,11,8],images:[
 "images/jpeg/rasila-handle.jpeg"
 ]},
 
-{name:"Rasila Handle (With Switch)",category:"Arcade Box Accessories",price:260,weight:300,dimensions:[14,11,8],images:[
+{name:"Rasila Handle (With Switch)",category:"Arcade Box Accessories",price:260,weight:320,dimensions:[14,11,8],images:[
 "images/jpeg/rasila-handle.jpeg",
 "images/jpeg/normal-switch-button.jpeg"
 ]},
@@ -1481,15 +1481,15 @@ images:[
 ]
 },
 
-{name:"Coin Packet",category:"Arcade Box Accessories",price:210,weight:620,dimensions:[12,12,3],images:[
+{name:"Coin Packet",category:"Arcade Box Accessories",price:210,weight:630,dimensions:[12,12,3],images:[
 "images/jpeg/coin-packet.jpeg"
 ]},
 
-{name:"Coin Acrylic Machine",category:"Arcade Box Accessories",price:195,weight:120,dimensions:[13,15,8],images:[
+{name:"Coin Acrylic Machine",category:"Arcade Box Accessories",price:195,weight:165,dimensions:[13,15,8],images:[
 "images/jpeg/acrylic-coin-machine.jpeg"
 ]},
 
-{name:"Coin Acrylic Machine with Switch",category:"Arcade Box Accessories",price:240,weight:135,dimensions:[13,15,8],images:[
+{name:"Coin Acrylic Machine with Switch",category:"Arcade Box Accessories",price:240,weight:170,dimensions:[13,15,8],images:[
 "images/jpeg/acrylic-coin-machine.jpeg",
 "images/jpeg/coindropswitch.jpeg"
 ]},
@@ -1503,7 +1503,7 @@ images:[
 "images/jpeg/remote-lead.jpeg"
 ]},
 
-{name:"10 Core Wire (Per Meter)",category:"Arcade Box Accessories",price:50,weight:70,dimensions:[10,5,3],images:[
+{name:"10 Core Wire (Per Meter)",category:"Arcade Box Accessories",price:50,weight:37.5,dimensionsPerMeters:2,dimensions:[7,7,2],images:[
 "images/jpeg/10-core-wire.jpg"
 ]},
 
@@ -1925,8 +1925,8 @@ categoryOrder.forEach((cat,categoryIndex)=>{
  <div class="product" data-category="${cat}">
   <b class="product-title">${p.name}</b>
   <div class="product-specs">
-    <span>📏 Size: <b>${p.dimensions ? p.dimensions.join(" × ")+" cm" : "Not set"}</b></span>
-    <span>⚖️ Weight: <b>${p.weight} g</b></span>
+    <span>📏 Size: <b>${p.dimensions ? p.dimensions.join(" × ")+" cm"+(p.dimensionsPerMeters?" per "+p.dimensionsPerMeters+" m":"") : "Not set"}</b></span>
+    <span>⚖️ Weight: <b>${p.dimensionsPerMeters?`${p.weight*p.dimensionsPerMeters} g per ${p.dimensionsPerMeters} m`:`${p.weight} g`}</b></span>
     ${p.packLabel?`<span>🎮 <b>${p.packLabel}</b></span>`:""}
   </div>
   <div class="image-row ${p.images.length>1?'multi-image':''}">${imgs}</div>
@@ -1935,7 +1935,7 @@ categoryOrder.forEach((cat,categoryIndex)=>{
   <div class="info">
    <div>
     <div class="price">${p.priceLabel || ("₹"+p.price)}</div>
-    <small>${p.weight} g / piece${p.compatibility?'<br><b>Compatibility:</b> '+p.compatibility:''}</small>
+    <small>${p.weight} g / ${p.dimensionsPerMeters?"m":p.name==="Coin Packet"?"pack":"piece"}${p.compatibility?'<br><b>Compatibility:</b> '+p.compatibility:''}</small>
    </div>
    ${p.variants?`<div style="min-width:220px">${p.variants.filter(v=>visibleLegacy(p,v)).map(v=>`<div style="display:flex;justify-content:space-between;align-items:center;margin:3px 0"><small><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${colorDots[v]||'#ccc'};border:2px solid #999;margin-right:6px;vertical-align:middle"></span>${v}</small><div class="qty"><button onclick="updateVariantQty(${i},'${v}',-1)">−</button><span id="vq${i}_${v.replace(/\s+/g,'_')}">${state['v_'+i+'_'+v]||0}</span><button onclick="updateVariantQty(${i},'${v}',1)">+</button></div></div>`).join('')}</div>`:`<div class="qty">
     <button onclick="updateQty(${i},-1)">−</button>
@@ -2684,8 +2684,8 @@ function getSelectedPhysicalItems(){
       p.variants.forEach(v=>qty += state['v_'+i+'_'+v]||0);
     }
     if(qty>0 && p.dimensions){
-      for(let n=0;n<qty;n++){
-        items.push({name:p.name,dims:[...p.dimensions],weight:p.weight});
+      for(let n=0;n<qty;n+=p.dimensionsPerMeters||1){
+        items.push({name:p.name,dims:[...p.dimensions],weight:p.weight*Math.min(qty-n,p.dimensionsPerMeters||1)});
       }
     }
   });
@@ -3834,11 +3834,11 @@ function getSelectedPhysicalItems(){
     }else{
       const qty=state[i]||0;
       const image=toTransparentPngAsset((p.images&&p.images[0])||"");
-      for(let n=0;n<qty;n++){
+      for(let n=0;n<qty;n+=p.dimensionsPerMeters||1){
         items.push({
           name:p.name,
           dims:[...p.dimensions],
-          weight:p.weight,
+          weight:p.weight*Math.min(qty-n,p.dimensionsPerMeters||1),
           image
         });
       }
